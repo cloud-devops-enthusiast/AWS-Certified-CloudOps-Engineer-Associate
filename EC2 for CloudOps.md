@@ -40,3 +40,25 @@ This is also for critical applications for which the instances should be isolate
   * NACL is not configured correctly
   * Check for your route tables for the subnet (routes traffic destined outside VPC(Virtual Private Cloud) to IGW(Internet Gateway)
 
+## SSH vs EC2 Instance Connect
+
+* #### Connect Using SSH
+
+* When you connect using SSH, your SSH pairs should be same as of source to get conncted to your instance but if your IPv4 pairs are different it blocks your connection.
+
+For example you have Inbound Rules:
+Type: SSH
+Protocol: TCP
+Port: 22
+Source: 1.2.3.4/32
+
+Now assume you have a security group inside which you have an instance with above given inbound rules.
+
+Let's try to connect two users with different IPv4s:
+
+* USER 1 (IPv4: 1.2.3.4): This user will be able to connect to the instance.
+
+* USER 2 (IPv4: 5.6.7.8): This user will be blocked while making a connection attempt.
+
+* #### Connect using EC2 Instance Connect
+
