@@ -81,3 +81,26 @@ For checking the ip ranges for different services you can use this json: https:/
 Here we create a AWS EC2 Instance Connect Endpoint which has a security group attached to it where we must have enabled the outbound SSH traffic to the target EC2 instances.
 
 For EC2 instance Security Group we must have allowed inbound SSH traffic from the EIC Endpoint Security Group. This way we can connect to our private EC2 instances securely without any internet access.
+
+* #### CloudWatch Metrics for EC2
+
+##### AWS Provides metrics (AWS pushes them):
+
+  * Basic Monitoring (default): These metrics are collected at 5-minute intervals and are available for free.
+  * Detailed Monitoring (Paid): These metrics are collected at 1-minute intervals and incur additional charges.
+  * These metrics will include CPU Utilization, Network In/Out, Disk Read/Write and  Status Checks. 
+
+##### Custom Metric (Yours to push):
+
+  * Basic Resolution: These metrics are collected at 1-minute intervals and incur additional charges.
+  * High Resolution: These metrics are collected at 1-second intervals and incur additional charges.
+  * These metrics will include any custom metrics that you want to push to CloudWatch, such as RAM usage, application performance metrics, or any other data relevant to your application or infrastructure.
+  * In this case, you need to make sure the IAM permissions over the EC2 instance are set correctly to allow pushing of custom metrics to CloudWatch.
+
+##### EC2 Included metrics
+
+  * CPU: CPU Utilization + Credit Usage/Balance
+  * Network: Network In/Out
+  * Status Checks:
+    * Instance Status = Checks the EC2 VM
+    * System Status = Checks the underlying AWS infrastructure
