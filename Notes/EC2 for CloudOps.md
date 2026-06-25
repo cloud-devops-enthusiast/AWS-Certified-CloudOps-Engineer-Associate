@@ -104,3 +104,31 @@ For EC2 instance Security Group we must have allowed inbound SSH traffic from th
   * Status Checks:
     * Instance Status = Checks the EC2 VM
     * System Status = Checks the underlying AWS infrastructure
+    * Attached EBS Status = Checks the attached EBS volumes
+  * Disk: Disk Read/Write Operations + Disk Read/Write Bytes (Only for Instance Store Volumes)
+  * **RAM** is not included in the AWS EC2 metrics.
+
+##### Unified CloudWatch Agent
+
+* These are used for virtual servers (EC2 Instances, On-premises servers and much more).
+* This collects additional system-level metrics like RAM, processes, used disk space, etc.
+* You can also send your logs to CloudWatch logs.
+    * No logs are being sent to from inside of your EC2 instance to CloudWatch logs without installing the CloudWatch Agent.
+* If you want to configure the CloudWatch Agent on your EC2 instance, you can use the centralized configuration using SSM parameter store to store your cofigurations.
+* Make sure the IAM permissions over the EC2 instance are set correctly to allow pushing of custom metrics and logs to CloudWatch.
+* Default namespace for the metrics collected by the Unified CloudWatch Agent is `CWAgent` and you can change it to your own namespace. The namespace can be changed in the configuration file of the CloudWatch Agent but here it will be added as a prefix to the metric name. 
+
+This whole configuration is more of like,
+
+EC2 Instance with Unified CloudWatch Agent installed —> Clouwatch Agent 
+(where this Unified CloudWatch Agent will send the metrics and logs to CloudWatch.)
+
+##### Unified CloudWatch Agent - procstat Plugin
+
+* Using this plugin youb will be collecting metrics and monitor system utilization of the individual processes.
+* This supports both linux and Windows based servers. For example, amount of time the process uses CPU, amount of memory the process uses, etc.
+* Here you can make choice of which processes you need to monitor by
+  * pid_file: You can specify the processes identification number (PID) file they create.
+  * exe: You can specify the process name thatv matches your specified string name (RegEx is supported).
+  * pattern: command line pattern which is used to start the process that matches your specified string name (RegEx is supported).
+* Metrics collected by this plugin will be prefixed with `procstat` in the CloudWatch metrics namespace. (For example, `procstat_cpu_usage` is the metric name for CPU usage of the process being monitored or 'procstat_cpu_usage' is the metric name for CPU usage of the process being monitored.)
