@@ -132,3 +132,10 @@ EC2 Instance with Unified CloudWatch Agent installed —> Clouwatch Agent
   * exe: You can specify the process name thatv matches your specified string name (RegEx is supported).
   * pattern: command line pattern which is used to start the process that matches your specified string name (RegEx is supported).
 * Metrics collected by this plugin will be prefixed with `procstat` in the CloudWatch metrics namespace. (For example, `procstat_cpu_usage` is the metric name for CPU usage of the process being monitored or 'procstat_cpu_usage' is the metric name for CPU usage of the process being monitored.)
+
+##### Unified CloudWatch Agent - Hands On
+
+* First, we need create an IAM role so our agents can send logs to CloudWatch, So for creating a role go to IAM and then navigate to Role and click on create a Role, In the Trusted Entity Type select AWS Service and select EC2 in Use Case and Click on Next.
+* Now we need to add permisions to this role so search for *CloudWatch*, here you will be able to find two options CloudWatchAgentAdminPolicy and CloudWatchAgentServerPolicy. Out of this we will be moving with the *CloudWatchAgentServerPolicy* and after selecting click on Next.
+* On this page name your Role and Click on Finish.
+
