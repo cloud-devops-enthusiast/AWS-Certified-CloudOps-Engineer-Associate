@@ -139,3 +139,32 @@ EC2 Instance with Unified CloudWatch Agent installed —> Clouwatch Agent
 * Now we need to add permisions to this role so search for *CloudWatch*, here you will be able to find two options CloudWatchAgentAdminPolicy and CloudWatchAgentServerPolicy. Out of this we will be moving with the *CloudWatchAgentServerPolicy* and after selecting click on Next.
 * On this page name your Role and Click on Finish.
 
+For installing the CloudWatch Agent on your EC2 instance, you can use the following commands:
+
+* install the agent on amazon linux 2
+
+```
+sudo yum install amazon-cloudwatch-agent
+```
+
+* run the wizard
+
+```
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard
+``` 
+
+* create some missing files 
+
+```
+sudo mkdir -p /usr/share/collectd
+sudo touch /usr/share/collectd/types.db
+```
+
+* options:
+
+```
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-cli -a fetch-config -m ec2 -c ssm:AmazonCloudWatch-linux -s
+
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-cli -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json -s
+```
+
